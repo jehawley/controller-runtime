@@ -18,6 +18,7 @@ package controller
 
 import (
 	"fmt"
+	"runtime/debug"
 	"sync"
 
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -33,6 +34,8 @@ func checkName(name string) error {
 		usedNames = sets.Set[string]{}
 	}
 
+	fmt.Sprintf("\n <3 name: %s", name)
+	debug.PrintStack()
 	if usedNames.Has(name) {
 		return fmt.Errorf("controller with name %s already exists. Controller names must be unique to avoid multiple controllers reporting to the same metric", name)
 	}
